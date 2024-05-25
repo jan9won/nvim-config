@@ -96,12 +96,12 @@ lspconfig.tsserver.setup {
 }
 
 lspconfig.eslint.setup({
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = { '*.tsx', '*.ts', '*.jsx', '*.js', '*.mjs', '*.mts' },
-      command = 'silent! EslintFixAll',
-    })
-  end
+  -- on_attach = function(client, bufnr)
+  --   vim.api.nvim_create_autocmd('BufWritePre', {
+  --     pattern = { '*.tsx', '*.ts', '*.jsx', '*.js', '*.mjs', '*.mts' },
+  --     command = 'silent! EslintFixAll',
+  --   })
+  -- end
 })
 
 lspconfig.stylelint_lsp.setup {
@@ -134,8 +134,12 @@ lspconfig.lua_ls.setup({
 -- jsonCapabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.jsonls.setup {}
 
+---------- Markdown ----------
 lspconfig.marksman.setup {}
-lspconfig.remark_ls.setup {}
+lspconfig.remark_ls.setup {
+  -- cmd = { "remark-language-server", "--stdio" },
+  -- requireConfig = false
+}
 -- lspconfig.prettier.setup {}
 
 lspconfig.bashls.setup {}

@@ -1,5 +1,4 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -13,18 +12,26 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
---   {
---     "vhyrro/luarocks.nvim",
---     priority = 1000, -- this plugin needs to run before anything else
---     opts = {
---       rocks = { 
---         "magick" 
---       }
---     }
---   },
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1001, -- this plugin needs to run before anything else
+    opts = {
+      rocks = {
+        "magick"
+      }
+    }
+  },
   {
     "3rd/image.nvim",
---     dependencies = { "luarocks.nvim" },
+    dependencies = { "luarocks.nvim" },
+  },
+  {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+    },
   },
   {
     -- Commenting
@@ -74,8 +81,8 @@ require("lazy").setup({
     config = function()
       require("mason-lspconfig").setup {
         ensure_installed = {
+          "jsonls",
           "lua_ls",
-          "eslint"
         }
       }
     end

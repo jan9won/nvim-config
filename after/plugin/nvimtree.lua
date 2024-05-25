@@ -21,9 +21,9 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'so', api.node.run.system, { noremap = true, buffer = bufnr })
 
   -- pane actions
-  vim.keymap.set("n", "spp", ":NvimTreeOpen<Return>")
+  -- vim.keymap.set("n", "spp", ":NvimTreeOpen<Return>")
   vim.keymap.set("n", "spe", ":NvimTreeToggle<Return>")
-  vim.keymap.set("n", "spc", ":NvimTreeClose<Return>")
+  -- vim.keymap.set("n", "spc", ":NvimTreeClose<Return>")
   vim.keymap.set("n", "spl", ":NvimTreeFindFile<Return>")
   -- vim.keymap.set("n", "fpc", ":NvimTreeCollapse<Return>")
 end
@@ -31,20 +31,38 @@ end
 -- Main Config
 require("nvim-tree").setup({
   on_attach = my_on_attach,
-  sort_by = "case_sensitive",
+  disable_netrw = true,
+  hijack_netrw = true,
+  sort = {
+    sorter = "case_sensitive"
+  },
   view = {
     width = 30,
     side = "left",
+    number = true,
+    relativenumber = true,
   },
   renderer = {
     group_empty = false,
+    indent_width = 2,
+    indent_markers = {
+      enable = true
+    }
   },
   git = {
-    ignore = false
+    enable = true,
   },
   filters = {
+    git_ignored = false,
     dotfiles = false,
     git_clean = false,
+    custom = {
+      '\\.DS_Store',
+      '\\.Ulysses-Group.plist',
+      '\\.Ulysses-Settings.plist',
+      '\\._.*' -- this is for mounted volumes
+    },
+    exclude = {}
   },
 })
 
@@ -102,4 +120,3 @@ require 'nvim-web-devicons'.setup {
 }
 
 require("nvim-web-devicons").refresh()
-

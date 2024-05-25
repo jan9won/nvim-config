@@ -2,6 +2,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.opt.conceallevel = 2
+vim.g.vim_markdown_conceal = 1
+
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 vim.opt.autoread = true

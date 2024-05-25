@@ -1,3 +1,12 @@
+---------- nvim-tree ----------
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- color encoding
+vim.opt.termguicolors = true
+
+
+
 require('jan9won')
 
 --- Reload the entire configuration
@@ -22,4 +31,3 @@ function ReloadConfig()
 end
 
 vim.api.nvim_create_user_command('ReloadConfig', ReloadConfig, {})
-
