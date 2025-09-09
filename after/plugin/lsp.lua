@@ -169,3 +169,60 @@ lsp.format_on_save({
   }
 })
 lsp.setup()
+
+-- ---------- Autocommands that should be called after LSP ----------
+--
+-- local function rename_markdown_with_heading()
+--   -- Get the current buffer's file name and directory
+--   local buf_name = vim.api.nvim_buf_get_name(0)
+--   local buf_dir = vim.fn.fnamemodify(buf_name, ":h")
+--
+--   -- Read the first line of the file
+--   local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+--
+--   -- Extract the top heading
+--   local heading = first_line:match("^#%s*(.+)")
+--   if not heading then
+--     -- If no heading is found, do nothing
+--     return
+--   end
+--
+--   -- Sanitize the heading to create a valid file name
+--   -- 1. Camelcase with underscore
+--   -- local sanitized_heading = heading:gsub("[^%w%s-_]", ""):gsub("%s+", "_")
+--   -- 2. Lowercase with hyphen (kebab-case)
+--   local sanitized_heading = heading:lower():gsub("[^%w가-힣]", "-"):gsub("%s+", "-")
+--
+--   -- Construct the new file name
+--   local new_name = buf_dir .. "/" .. sanitized_heading .. ".md"
+--
+--   -- print(buf_name);
+--
+--   -- Check if the new name is different from the current name
+--   if new_name ~= buf_name and buf_name ~= buf_dir .. "/" .. "README.md" then
+--     -- Rename the file
+--     local ok, err = vim.loop.fs_rename(buf_name, new_name)
+--     if not ok then
+--       vim.api.nvim_err_writeln("Failed to rename file: " .. err)
+--       return
+--     end
+--
+--     -- Update the buffer to reflect the new file name
+--     vim.api.nvim_buf_set_name(0, new_name)
+--
+--     -- Reload the buffer to ensure it is pointing to the new file
+--     vim.cmd("edit!")
+--   end
+-- end
+--
+-- -- Create an autocommand group to avoid duplications
+-- local augroup = vim.api.nvim_create_augroup("RenameMarkdownWithHeading", { clear = true })
+--
+-- -- Define the autocommand with a delay to ensure it runs after formatting
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--   group = augroup,
+--   pattern = "*.md",
+--   callback = function()
+--     rename_markdown_with_heading()
+--   end,
+-- })

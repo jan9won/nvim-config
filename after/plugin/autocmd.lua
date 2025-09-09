@@ -1,28 +1,27 @@
--- vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
---   command = "if mode() != 'c' | checktime | endif",
---   pattern = { "*" },
--- })
--- local function set_window_max_columns()
---   if vim.bo.filetype == 'markdown' then
---     -- Get the current window ID
---     local win_id = vim.api.nvim_get_current_win()
---     -- Get the width of the screen
---     local screen_width = vim.o.columns
---     -- Set the current window's width to the screen width
---     vim.api.nvim_win_set_width(win_id, screen_width)
---   end
--- end
+---------- Conceal in Markdown ----------
+-- vim.cmd [[
+--   " Highlight markdown link URLs differently
+--   syntax match markdownLinkURL /\v\([^\)]+\)/ contained containedin=markdownLink conceal
+--   syntax match markdownLinkText /\v\[.*\]/ contained containedin=markdownLink
+--   syntax match markdownLink /\v\[.*\]\([^\)]+\)/ contains=markdownLinkText,markdownLink,markdownLinkURL
+--
+--   " Set conceal for URLs
+--   hi link markdownLinkURL Conceal
+--   hi link markdownLinkText NONE
+--   set conceallevel=1
+--   set concealcursor=nc
+-- ]]
 
-
+---------- Word Wrapping & Conceal in Markdown ----------
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    -- set_window_max_columns();
-    -- vim.opt_local.textwidth = vim.api.nvim_win_get_width(0)
+    -- vim.opt_local.wrapmargin = 0
+    vim.opt_local.textwidth = 79
     vim.opt_local.wrap = true
-    vim.opt_local.wrapmargin = 0
     vim.opt_local.linebreak = true
-    -- vim.opt_local.columns = vim.api.nvim_win_get_width(0)
+    vim.opt_local.breakindent = true
+    vim.opt.formatoptions:append("t")
 
     -- vim.api.nvim_create_autocmd('WinResized', {
     --   callback = set_window_max_columns,
@@ -30,29 +29,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end
 })
 
+---------- Open nvim-tree when opening ----------
+vim.api.nvim_create_autocmd("VimEnter", {
+  command = ":NvimTreeOpen",
+})
+
+---------- Close nvim-tree before leaving ----------
 vim.api.nvim_create_autocmd("VimLeavePre", {
   command = ":NvimTreeClose",
 })
 
+---------- Save this session as a file ----------
 vim.api.nvim_create_user_command(
   "S",
   "mksession!",
   {}
 )
 
--- api.nvim_create_autocmd("VimLeavePre", {
---     command = "mksession!",
--- })
---
-vim.api.nvim_create_autocmd("VimEnter", {
-  command = ":NvimTreeOpen",
-})
-
--- api.nvim_create_autocmd("VimEnter", {
---     command = "mksession!",
--- })
---
-
+---------- Markdown autoformatting with `remark-cli` when lspzero and remark_ls are not working ----------
 -- vim.api.nvim_create_autocmd("BufWritePost", {
 --   group = vim.api.nvim_create_augroup("RemarkFormat", { clear = true }),
 --   pattern = "*.md",
@@ -62,6 +56,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 --   end,
 -- })
 
+---------- Also markdown autoformatting but async ----------
 -- -- Create an autocommand group
 -- local group = vim.api.nvim_create_augroup("RemarkFormat", { clear = true })
 --
@@ -93,6 +88,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 -- })
 
 
+---------- sql_ls autoformatting "inside Typescript" ----------
 -- local function custom_sql_autocomplete()
 --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 --   local line_text = vim.api.nvim_get_current_line()

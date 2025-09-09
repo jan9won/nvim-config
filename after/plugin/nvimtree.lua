@@ -20,6 +20,9 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'st', api.node.open.tab, { noremap = true, buffer = bufnr })
   vim.keymap.set('n', 'so', api.node.run.system, { noremap = true, buffer = bufnr })
 
+  -- always trash
+  vim.keymap.set('n', 'd', api.fs.trash, { noremap = true, silent = true, buffer = bufnr })
+
   -- pane actions
   -- vim.keymap.set("n", "spp", ":NvimTreeOpen<Return>")
   vim.keymap.set("n", "spe", ":NvimTreeToggle<Return>")
@@ -49,6 +52,9 @@ require("nvim-tree").setup({
       enable = true
     }
   },
+  -- trash = {
+  --   cmd = "trash"
+  -- },
   git = {
     enable = true,
   },

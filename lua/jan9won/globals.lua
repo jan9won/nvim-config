@@ -2,8 +2,10 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.opt.conceallevel = 2
-vim.g.vim_markdown_conceal = 1
+-- link folding (concealing)
+vim.opt.conceallevel = 0
+vim.opt.concealcursor = "nc"
+vim.g.vim_markdown_conceal = 0
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
@@ -14,8 +16,6 @@ vim.opt.guicursor = ""
 
 -- fold method
 vim.opt.foldmethod = "manual"
--- line number
-vim.opt.nu = true
 
 -- relative line number
 vim.opt.relativenumber = true
@@ -36,14 +36,17 @@ vim.opt.backup = false
 vim.opt.undofile = true
 
 -- search
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 -- lines
 vim.opt.scrolloff = 8 -- scroll position always stays 8 lines above bottom
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
-vim.opt.colorcolumn = "80" -- vertical line
+vim.opt.nu = true
+
+-- column
+vim.opt.colorcolumn = "80"
 
 -- leader and leader timing
 vim.g.mapleader = " "
